@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Short title:</strong>
+  <%= @unit.short_title %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @unit.location %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= @unit.image %>
+</p>
+
+<%= link_to 'Edit', edit_unit_path(@unit) %> |
+<%= link_to 'Back', units_path %>

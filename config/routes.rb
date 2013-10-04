@@ -1,6 +1,11 @@
 Gastore::Application.routes.draw do
-  root :to => 'codes#home'
+
+  resources :units
+
+  root :to => 'live_hotels#index'
   get 'code' => 'codes#home'
+  
+  get 'hotel' => 'live_hotels#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
