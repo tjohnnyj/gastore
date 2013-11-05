@@ -28,4 +28,5 @@ Gastore::Application.configure do
   config.assets.debug = true
   
   config.assets.compile = true
+  
 end

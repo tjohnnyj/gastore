@@ -191,7 +191,7 @@ background-image:url(https://a5.lscdn.net/imgs/7e8694c2-5e30-4afb-98e0-be5fb2781
 
 <% @live_hotels.each do |hotel| %>
 <%= hotel %>
-<a href="https://www.livingsocial.com/escapes/properties/<%= hotel[1] %>">  
+<a href="%%CLICK_URL_UNESC%%https://www.livingsocial.com/escapes/properties/<%= hotel[1] %>?ref=sbs_<%= hotel[1] %>" target="_parent">  
 
   <div style="margin-top:50px;" class="ad_unit">
 
@@ -408,27 +408,29 @@ background-image:url(https://a5.lscdn.net/imgs/7e8694c2-5e30-4afb-98e0-be5fb2781
   <body>
     %%VIEW_URL_UNESC%%
     
-  <a href="%%CLICK_URL_UNESC%%https://www.livingsocial.com/properties/<%= hotel[1] %>?ref=<%= hotel[1] %>_sbs">  
+    <a href="%%CLICK_URL_UNESC%%https://www.livingsocial.com/escapes/properties/<%= hotel[1] %>?ref=sbs_<%= hotel[1] %>" target="_parent">  
 
-    <div class="ad_unit">
+      <div class="ad_unit">
 
-      <div class="img_holder">
-        <img src="<%= hotel[8] %>/150_q60.jpg">
-        <div class="savings">
-          <div class="deal-location">
-            <%= hotel[13] %>
+        <div class="img_holder">
+          <img src="<%= hotel[8] %>/150_q60.jpg">
+          <div class="savings">
+            <div class="deal-location">
+              <%= hotel[13] %>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="txt_holder">
-        <h1><%= hotel[4] %></h1>
-        <h2><%= hotel[5] %>,<%= (hotel[6] == "NULL")? hotel[7] : hotel[6] %></h2>      
-        <p class="meta">
-          <span class="btn">&raquo;</span>
-        </p>
-      </div>
-    </div>  
-  </a>
+        <div class="txt_holder">
+          <div class="headline_wrapper">
+            <h1><%= hotel[4] %></h1>
+            <h2><%= hotel[5] %>, <%= (hotel[6] == "NULL")? hotel[7] : hotel[6] %></h2>      
+          </div>
+          <p class="meta">
+            <span class="btn">&raquo;</span>
+          </p>
+        </div>
+      </div>  
+    </a>
 </body>
 </html>
 </textarea>

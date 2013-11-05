@@ -7,6 +7,10 @@ gem 'rails_12factor'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+gem 'rest-client'
+gem 'json'
+
+gem 'oauth2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

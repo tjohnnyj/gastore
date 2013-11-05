@@ -1,6 +1,6 @@
 require "csv"
 require 'json'
-require 'net/http'
+require 'rest-client'
 
 class LiveHotelsController < ApplicationController
   before_action :set_live_hotel, only: [:show, :edit, :update, :destroy]
@@ -15,14 +15,17 @@ class LiveHotelsController < ApplicationController
     @live_hotels = []
   end
   
+
+  
   def index
     CSV.foreach("app/assets/hotels/live_deals.csv","r") do |this_hotel|
+        puts this_hotel[12]
         if this_hotel[12] == "voucher"
            primary = []
-           uri = URI("http://deals-service.livingsocial.net/api/v1/deals/"+this_hotel[9]+".json?client_name=docs")
-           Net::HTTP.get(uri)
-           res = Net::HTTP.get_response(uri)
-           deal_obj = JSON.parse(res.body)
+           this_json = "http://deals-service-direct.iad.livingsocial.net/api/v1/deals/#{this_hotel[9]}.json"
+          data = RestClient.get this_json,{ "X-DealsService-Client" => "my_test_client"}
+          puts data.body
+          deal_obj = JSON.parse(data.body)
            deal_obj["options"].each do |opt|
              if opt["primary"] == true
                price = BigDecimal(opt["price"].to_s)
@@ -34,14 +37,19 @@ class LiveHotelsController < ApplicationController
            end
           elsif this_hotel[12] == "dated_flash"
 
-            uri = URI('http://travel-service.livingsocial.net/travel/browse/deal_for_property?arg%5B1%5D='+this_hotel[1])
-            Net::HTTP.get(uri)
-            res = Net::HTTP.get_response(uri)
+#            uri = URI.parse('http://travel-service.iad.livingsocial.net/travel/browse/deal_for_property?arg%5B1%5D='+this_hotel[1])
+#            http = Net::HTTP.new(uri.host, uri.port)
+#            Net::HTTP.get(uri)
+#            res = Net::HTTP.get_response(uri)
+            this_json ='http://travel-service.iad.livingsocial.net/travel/browse/deal_for_property?arg%5B1%5D='+this_hotel[1]
+             res = RestClient.get this_json
             deal_obj = JSON.parse(res.body)
-            puts deal_obj["result"]["44:lead_price"]["9:discount_percentage"]
-            savings = deal_obj["result"]["44:lead_price"]["9:discount_percentage"]
-            savings = savings.to_s + "% savings"
-            this_hotel.push(savings)
+            if deal_obj["result"]["44:lead_price"] != nil
+              puts deal_obj["result"]["44:lead_price"]["9:discount_percentage"]
+              savings = deal_obj["result"]["44:lead_price"]["9:discount_percentage"]
+              savings = savings.to_s + "% savings"
+              this_hotel.push(savings)
+            end
          end
          
          puts this_hotel
